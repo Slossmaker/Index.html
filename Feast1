@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recipes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-page: #f5f5f5;
+      --bg-card: #ffffff;
+      --primary: #0077ff;
+      --primary-soft: #e6f0ff;
+      --border-soft: #e0e0e0;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --radius-lg: 12px;
+      --shadow-soft: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: var(--bg-page);
+      color: var(--text-main);
+    }
+    body.mode-mobile {
+      font-size: 16px;
+    }
+    body.mode-pc {
+      font-size: 14px;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    .tabs-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .tabs-wrapper h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      background: #ffffff;
+      padding: 0.35rem;
+      border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+    .tab-btn:active {
+      transform: scale(0.97);
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .card {
+      background: var(--bg-card);
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+    }
+    @media (min-width: 900px) {
+      .layout {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .card {
+        height: fit-content;
+      }
+    }
+    body.mode-mobile .layout {
+      flex-direction: column !important;
+    }
+    body.mode-pc .layout {
+      flex-direction: row !important;
+    }
+
+    form .field {
+      margin-bottom: 0.75rem;
+    }
+    .field-group {
+      padding: 0.75rem 0;
+      border-top: 1px dashed var(--border-soft);
+    }
+    .field-group:first-of-type {
+      border-top: none;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.4rem;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
+      background: #fff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-soft);
+    }
+
+    .row-list {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+      background: #fafafa;
+      border-radius: 0.5rem;
+      padding: 0.35rem 0.4rem;
+      border: 1px solid #eee;
+      align-items: center;
+    }
+    .row-list input[type="text"] {
+      flex: 1;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+    .row-list input[type="text"]:focus {
+      outline: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    .small-btn {
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.4rem;
+      border: 1px solid #ccc;
+      background: #eee;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    }
+    .small-btn:hover {
+      opacity: 0.9;
+    }
+    .small-btn:active {
+      transform: scale(0.97);
+    }
+    .small-btn.danger {
+      border-color: #f87171;
+      background: #fee2e2;
+    }
+
+    button[type="submit"],
+    .primary-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    }
+    button[type="submit"]:hover,
+    .primary-btn:hover {
+      opacity: 0.9;
+    }
+    button[type="submit"]:active,
+    .primary-btn:active {
+      transform: scale(0.97);
+    }
+
+    .rating-group {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+    .rating-group .field {
+      margin-bottom: 0;
+    }
+
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .recipe-card {
+      border-radius: 0.75rem;
+      padding: 0.75rem 0.9rem;
+      background: white;
+      border: 1px solid #ddd;
+      transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+    }
+    .recipe-card.editing {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary-soft), 0 4px 16px rgba(0,0,0,0.08);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .recipe-card:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        transform: translateY(-1px);
+      }
+    }
+    .recipe-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+    .recipe-header-title {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .recipe-header-title .main-title {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      background: #eef2ff;
+      font-size: 0.75rem;
+      margin-right: 0.25rem;
+    }
+    .favorite {
+      color: #f5a623;
+      font-size: 1.2rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+    }
+    .chip {
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      background: #f0f0f0;
+    }
+
+    .muted {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .filters-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .filters-inline input[type="text"],
+    .filters-inline select {
+      width: auto;
+      min-width: 150px;
+    }
+
+    .filters-panel {
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-soft);
+      padding: 0.5rem 0.75rem;
+      background: #fafafa;
+    }
+    .filters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .filters-body {
+      margin-top: 0.5rem;
+    }
+
+    .portata-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .portata-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+      margin-bottom: 0;
+      padding: 0.15rem 0.4rem;
+      border-radius: 999px;
+      background: #f0f0f0;
+    }
+
+    .actions-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    #fotoPreview {
+      margin-top: 0.5rem;
+    }
+
+    .portata-manage-row,
+    .friend-row,
+    .ingredient-dict-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .ingredient-dict-row span.base-name {
+      min-width: 120px;
+      font-weight: 600;
+    }
+    .ingredient-dict-row .dict-inputs {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .ingredient-dict-row .dict-inputs input[type="text"] {
+      width: 120px;
+    }
+    .ingredient-dict-row .dict-actions {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .steps-list {
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+    }
+    .steps-list li {
+      margin-bottom: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    .small-photo {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      margin-top: 0.25rem;
+    }
+
+    /* scroll limit for ingredient dictionary */
+    #ingredientDictList {
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid #eee;
+      border-radius: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      background: #fafafa;
+    }
+
+    /* Settings alternating background */
+    #sheetSettings .field:nth-of-type(odd) {
+      background: #fafafa;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs-wrapper">
+    <h1 data-i18n="appTitle">My recipes</h1>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-sheet="form" data-i18n="tabForm">Add</button>
+      <button class="tab-btn" data-sheet="list" data-i18n="tabList">Cookbook</button>
+      <button class="tab-btn" data-sheet="settings" data-i18n="tabSettings">Settings</button>
+    </nav>
+
+    <div class="layout">
+      <!-- Form sheet -->
+      <section id="sheetForm" class="card" style="flex: 1;">
+        <h2 id="formTitle" data-i18n="formTitleNew">New recipe</h2>
+        <form id="recipeForm" autocomplete="off">
+          <div class="field field-group">
+            <label for="titolo" data-i18n="labelTitle">Title</label>
+            <input id="titolo" name="titolo" type="text" autocomplete="off" required />
+          </div>
+
+          <!-- Course types -->
+          <div class="field field-group">
+            <label data-i18n="labelCourseTypes">Course type (one or more)</label>
+            <div id="portataOptions" class="portata-options"></div>
+            <div style="margin-top:0.35rem; display:flex; gap:0.5rem;">
+              <input
+                id="nuovaPortata"
+                type="text"
+                autocomplete="off"
+                data-i18n-placeholder="placeholderNewCourse"
+                placeholder="New type (e.g. Street food)"
+              />
+              <button id="addPortataBtn" type="button" class="small-btn" data-i18n="btnAddCourseType">
+                Add type
+              </button>
+            </div>
+          </div>
+
+          <!-- Ingredients -->
+          <div class="field field-group">
+            <label data-i18n="labelIngredients">Ingredients</label>
+            <div id="ingredientsContainer"></div>
+            <button id="addIngredientBtn" type="button" class="small-btn" data-i18n="btnAddIngredient">
+              + ingredient
+            </button>
+            <datalist id="ingredientSuggestions"></datalist>
+          </div>
+
+          <!-- Variants -->
+          <div class="field field-group">
+            <label for="varianti" data-i18n="labelVariants">Possible variants (one per line)</label>
+            <textarea
+              id="varianti"
+              name="varianti"
+              data-i18n-placeholder="placeholderVariants"
+              placeholder="E.g. vegetarian version&#10;With speck instead of ham"
+            ></textarea>
+          </div>
+
+          <!-- Steps -->
+          <div class="field field-group">
+            <label data-i18n="labelSteps">Recipe steps</label>
+            <div id="stepsContainer"></div>
+            <button id="addStepBtn" type="button" class="small-btn" data-i18n="btnAddStep">
+              + step
+            </button>
+          </div>
+
+          <!-- Ratings -->
+          <div class="field field-group">
+            <label data-i18n="labelRatings">Ratings (1–5)</label>
+            <div class="rating-group">
+              <div class="field">
+                <label for="gusto" data-i18n="labelTaste">Taste</label>
+                <input id="gusto" name="gusto" type="number" min="1" max="5" value="5" />
+              </div>
+              <div class="field">
+                <label for="facilita" data-i18n="labelEase">Ease</label>
+                <input id="facilita" name="facilita" type="number" min="1" max="5" value="3" />
+              </div>
+              <div class="field">
+                <label for="prezzo" data-i18n="labelPrice">Price</label>
+                <input id="prezzo" name="prezzo" type="number" min="1" max="5" value="4" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Favorite -->
+          <div class="field field-group">
+            <label>
+              <input id="preferito" type="checkbox" />
+              <span data-i18n="labelFavorite">Add to favorites</span>
+            </label>
+          </div>
+
+          <!-- Photo -->
+          <div class="field field-group">
+            <label for="foto" data-i18n="labelPhoto">Photo (optional)</label>
+            <input id="foto" type="file" accept="image/*" />
+            <img id="fotoPreview" alt="Photo preview" class="small-photo" style="display:none;" />
+          </div>
+
+          <div class="actions-row field-group">
+            <button type="submit" id="submitBtn" data-i18n="btnSaveRecipe">Save recipe</button>
+            <button
+              type="button"
+              id="cancelEditBtn"
+              class="small-btn"
+              style="display:none;"
+              data-i18n="btnCancelEdit"
+            >
+              Cancel edit
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- List / filters sheet -->
+      <section id="sheetList" class="card" style="flex: 1.2;">
+        <h2 data-i18n="titleSavedRecipes">Saved recipes</h2>
+        <div class="field">
+          <div class="filters-panel">
+            <div class="filters-header">
+              <span class="muted" data-i18n="labelFilters">Filters</span>
+              <span class="muted" id="filtersToggleIcon">▾</span>
+            </div>
+            <div class="filters-body">
+              <div class="filters-inline">
+                <div>
+                  <label for="filterPortata" data-i18n="labelFilterCourse">Course type</label>
+                  <select id="filterPortata">
+                    <option value="" data-i18n="optionAllCourses">All</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="filterTitle" data-i18n="filterTitle">Title contains</label>
+                  <input
+                    id="filterTitle"
+                    type="text"
+                    autocomplete="off"
+                    data-i18n-placeholder="placeholderFilterTitle"
+                    placeholder="e.g. lasagna"
+                  />
+                </div>
+                <div>
+                  <label for="filterIngredients" data-i18n="labelFilterIngredients">Ingredients (comma separated)</label>
+                  <input
+                    id="filterIngredients"
+                    type="text"
+                    autocomplete="off"
+                    data-i18n-placeholder="placeholderFilterIngredients"
+                    placeholder="e.g. zucchini, parmesan"
+                  />
+                </div>
+                <div>
+                  <span class="muted" data-i18n="labelIngredientLogic">Ingredients: AND / OR</span><br />
+                  <label class="muted">
+                    <input type="radio" name="ingredientMode" value="and" checked />
+                    <span data-i18n="labelLogicAnd">all (AND)</span>
+                  </label>
+                  <label class="muted">
+                    <input type="radio" name="ingredientMode" value="or" />
+                    <span data-i18n="labelLogicOr">at least one (OR)</span>
+                  </label>
+                </div>
+                <div>
+                  <label for="filterOwner" data-i18n="labelFilterOwner">Source</label>
+                  <select id="filterOwner">
+                    <option value="" data-i18n="optionOwnerAll">All recipes</option>
+                    <option value="me" data-i18n="optionOwnerMe">My recipes</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="sortBy" data-i18n="labelSortBy">Sort by</label>
+                  <select id="sortBy">
+                    <option value="titolo" data-i18n="sortTitle">Title (A–Z)</option>
+                    <option value="gusto" data-i18n="sortTaste">Taste</option>
+                    <option value="facilita" data-i18n="sortEase">Ease</option>
+                    <option value="prezzo" data-i18n="sortPrice">Price</option>
+                  </select>
+                </div>
+                <button id="applyFiltersBtn" type="button" class="primary-btn" data-i18n="btnApplyFilters">
+                  Apply
+                </button>
+                <button id="clearFiltersBtn" type="button" class="small-btn" data-i18n="btnClearFilters">
+                  Clear
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+
+        <div id="recipesList" class="recipes-list"></div>
+      </section>
+
+      <!-- Settings sheet -->
+      <section id="sheetSettings" class="card" style="flex: 0.9;">
+        <h2 data-i18n="titleSettings">Settings</h2>
+
+        <!-- Language -->
+        <div class="field">
+          <label data-i18n="labelLanguage">Language</label>
+          <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="it">Italiano</option>
+            <option value="fr">Français</option>
+          </select>
+        </div>
+
+        <hr />
+
+        <!-- Device mode -->
+        <div class="field">
+          <label data-i18n="labelDeviceType">Device type</label>
+          <label class="muted">
+            <input type="radio" name="deviceMode" value="mobile" />
+            <span data-i18n="deviceMobile">Mobile (phone / tablet)</span>
+          </label>
+          <label class="muted">
+            <input type="radio" name="deviceMode" value="pc" />
+            <span data-i18n="devicePc">PC / large screen</span>
+          </label>
+        </div>
+
+        <hr />
+
+        <!-- Course types management -->
+        <div class="field">
+          <label data-i18n="labelManageCourses">Manage course types</label>
+          <p class="muted" data-i18n="textManageCoursesHelp">
+            You can add new types from the main form. Here you can remove the ones you no longer use.
+          </p>
+          <div id="portataManageList"></div>
+        </div>
+
+        <hr />
+
+        <!-- Friends -->
+        <div class="field">
+          <label data-i18n="labelFriends">Friends</label>
+          <p class="muted" data-i18n="textFriendsHelp">
+            Add friends and import their recipe JSON files into their own folder. You can then filter recipes by friend.
+          </p>
+          <div style="display:flex; gap:0.5rem; margin-bottom:0.5rem;">
+            <input
+              id="newFriendName"
+              type="text"
+              autocomplete="off"
+              data-i18n-placeholder="placeholderFriendName"
+              placeholder="Friend name"
+            />
+            <button id="addFriendBtn" type="button" class="small-btn" data-i18n="btnAddFriend">
+              Add friend
+            </button>
+          </div>
+          <div id="friendsList"></div>
+        </div>
+
+        <hr />
+
+        <!-- Ingredient dictionary -->
+        <div class="field">
+          <label data-i18n="labelIngredientDict">Ingredient dictionary</label>
+          <p class="muted" data-i18n="textIngredientDictHelp">
+            For each base ingredient name you can optionally set translations in EN / IT / FR. When you change language, ingredients will be shown using these translations when available.
+          </p>
+          <div style="margin-bottom:0.4rem;">
+            <input
+              id="ingredientDictSearch"
+              type="text"
+              autocomplete="off"
+              data-i18n-placeholder="ingredientDictSearchPlaceholder"
+              placeholder="Search ingredient..."
+            />
+          </div>
+          <div id="ingredientDictList"></div>
+        </div>
+
+        <hr />
+
+        <!-- Backup / export / import -->
+        <div class="field">
+          <label data-i18n="labelBackup">Backup, export and sharing</label>
+          <p class="muted" data-i18n="textBackupHelp">
+            Export all your recipes to a JSON file so you can share or import them on another device.
+          </p>
+          <div class="actions-row">
+            <button id="exportBtn" type="button" class="primary-btn" data-i18n="btnExport">
+              Export recipes
+            </button>
+            <button id="importBtn" type="button" class="small-btn" data-i18n="btnImport">
+              Import recipes
+            </button>
+            <input id="importFile" type="file" accept="application/json" style="display:none;" />
+            <input id="friendImportFile" type="file" accept="application/json" style="display:none;" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "ricetteApp_v5";
+
+    // Course types definition with translations
+    const COURSE_TYPES = [
+      {
+        key: "appetizer",
+        labels: { en: "Appetizer", it: "Antipasto", fr: "Entrée" }
+      },
+      {
+        key: "first",
+        labels: { en: "First course", it: "Primo", fr: "Premier plat" }
+      },
+      {
+        key: "main",
+        labels: { en: "Main course", it: "Secondo", fr: "Plat principal" }
+      },
+      {
+        key: "side",
+        labels: { en: "Side dish", it: "Contorno", fr: "Accompagnement" }
+      },
+      {
+        key: "onepot",
+        labels: { en: "One-pot dish", it: "Piatto unico", fr: "Plat complet" }
+      },
+      {
+        key: "dessert",
+        labels: { en: "Dessert", it: "Dolce", fr: "Dessert" }
+      },
+      {
+        key: "snack",
+        labels: { en: "Snack", it: "Snack", fr: "Snack" }
+      },
+      {
+        key: "drink",
+        labels: { en: "Drink", it: "Bevanda", fr: "Boisson" }
+      }
+    ];
+
+    const defaultPortate = COURSE_TYPES.map((c) => c.key);
+
+    function getCourseLabel(key, lang) {
+      const ct = COURSE_TYPES.find((c) => c.key === key);
+      if (!ct) return key;
+      const l = lang || currentLang || "en";
+      return ct.labels[l] || ct.labels.en || key;
+    }
+
+    // Default emoji ingredients: base id, emoji e nomi tradotti senza emoji
+    const EMOJI_INGREDIENTS = [
+      // Frutta
+      { base: "apple",      emoji: "🍎", labels: { en: "Apple",      it: "Mela",          fr: "Pomme" } },
+      { base: "banana",     emoji: "🍌", labels: { en: "Banana",     it: "Banana",        fr: "Banane" } },
+      { base: "orange",     emoji: "🍊", labels: { en: "Orange",     it: "Arancia",       fr: "Orange" } },
+      { base: "lemon",      emoji: "🍋", labels: { en: "Lemon",      it: "Limone",        fr: "Citron" } },
+      { base: "strawberry", emoji: "🍓", labels: { en: "Strawberry", it: "Fragola",       fr: "Fraise" } },
+      { base: "grapes",     emoji: "🍇", labels: { en: "Grapes",     it: "Uva",           fr: "Raisin" } },
+      { base: "watermelon", emoji: "🍉", labels: { en: "Watermelon", it: "Anguria",       fr: "Pastèque" } },
+      { base: "pineapple",  emoji: "🍍", labels: { en: "Pineapple",  it: "Ananas",        fr: "Ananas" } },
+      { base: "peach",      emoji: "🍑", labels: { en: "Peach",      it: "Pesca",         fr: "Pêche" } },
+      { base: "cherries",   emoji: "🍒", labels: { en: "Cherries",   it: "Ciliegie",      fr: "Cerises" } },
+      { base: "pear",       emoji: "🍐", labels: { en: "Pear",       it: "Pera",          fr: "Poire" } },
+      { base: "mango",      emoji: "🥭", labels: { en: "Mango",      it: "Mango",         fr: "Mangue" } },
+
+      // Verdure
+      { base: "tomato",     emoji: "🍅", labels: { en: "Tomato",     it: "Pomodoro",      fr: "Tomate" } },
+      { base: "carrot",     emoji: "🥕", labels: { en: "Carrot",     it: "Carota",        fr: "Carotte" } },
+      { base: "potato",     emoji: "🥔", labels: { en: "Potato",     it: "Patata",        fr: "Pomme de terre" } },
+      { base: "corn",       emoji: "🌽", labels: { en: "Corn",       it: "Mais",          fr: "Maïs" } },
+      { base: "eggplant",   emoji: "🍆", labels: { en: "Eggplant",   it: "Melanzana",     fr: "Aubergine" } },
+      { base: "avocado",    emoji: "🥑", labels: { en: "Avocado",    it: "Avocado",       fr: "Avocat" } },
+      { base: "cucumber",   emoji: "🥒", labels: { en: "Cucumber",   it: "Cetriolo",      fr: "Concombre" } },
+      { base: "broccoli",   emoji: "🥦", labels: { en: "Broccoli",   it: "Broccoli",      fr: "Brocoli" } },
+      { base: "mushroom",   emoji: "🍄", labels: { en: "Mushroom",   it: "Fungo",         fr: "Champignon" } },
+      { base: "chili_pepper",emoji:"🌶️",labels:{ en:"Chili pepper", it:"Peperoncino",    fr:"Piment" } },
+      { base: "leafy_greens",emoji:"🥬",labels:{ en:"Leafy greens",  it:"Verdure a foglia", fr:"Légumes verts" } },
+
+      // Aromi / base
+      { base: "garlic",     emoji: "🧄", labels: { en: "Garlic",     it: "Aglio",         fr: "Ail" } },
+      { base: "onion",      emoji: "🧅", labels: { en: "Onion",      it: "Cipolla",       fr: "Oignon" } },
+      { base: "basil",      emoji: "🌿", labels: { en: "Basil",      it: "Basilico",      fr: "Basilic" } },
+      { base: "olive_oil",  emoji: "🫒", labels: { en: "Olive oil",  it: "Olio d'oliva",  fr: "Huile d'olive" } },
+      { base: "salt",       emoji: "🧂", labels: { en: "Salt",       it: "Sale",          fr: "Sel" } },
+
+      // Pane e simili
+      { base: "bread",      emoji: "🍞", labels: { en: "Bread",      it: "Pane",          fr: "Pain" } },
+      { base: "croissant",  emoji: "🥐", labels: { en: "Croissant",  it: "Cornetto",      fr: "Croissant" } },
+      { base: "baguette",   emoji: "🥖", labels: { en: "Baguette",   it: "Baguette",      fr: "Baguette" } },
+      { base: "pancakes",   emoji: "🥞", labels: { en: "Pancakes",   it: "Pancake",       fr: "Pancakes" } },
+      { base: "waffle",     emoji: "🧇", labels: { en: "Waffle",     it: "Waffle",        fr: "Gaufre" } },
+
+      // Latticini / uova
+      { base: "cheese",     emoji: "🧀", labels: { en: "Cheese",     it: "Formaggio",     fr: "Fromage" } },
+      { base: "egg",        emoji: "🥚", labels: { en: "Egg",        it: "Uovo",          fr: "Œuf" } },
+      { base: "butter",     emoji: "🧈", labels: { en: "Butter",     it: "Burro",         fr: "Beurre" } },
+      { base: "milk",       emoji: "🥛", labels: { en: "Milk",       it: "Latte",         fr: "Lait" } },
+
+      // Carni e pesce
+      { base: "bacon",      emoji: "🥓", labels: { en: "Bacon",      it: "Pancetta",      fr: "Bacon" } },
+      { base: "chicken",    emoji: "🍗", labels: { en: "Chicken",    it: "Pollo",         fr: "Poulet" } },
+      { base: "beef",       emoji: "🥩", labels: { en: "Beef",       it: "Manzo",         fr: "Boeuf" } },
+      { base: "fish",       emoji: "🐟", labels: { en: "Fish",       it: "Pesce",         fr: "Poisson" } },
+      { base: "shrimp",     emoji: "🍤", labels: { en: "Shrimp",     it: "Gamberi",       fr: "Crevettes" } },
+
+      // Cereali / primi
+      { base: "pasta",      emoji: "🍝", labels: { en: "Pasta",      it: "Pasta",         fr: "Pâtes" } },
+      { base: "rice",       emoji: "🍚", labels: { en: "Rice",       it: "Riso",          fr: "Riz" } },
+      { base: "burger",     emoji: "🍔", labels: { en: "Burger",     it: "Hamburger",     fr: "Burger" } },
+      { base: "fries",      emoji: "🍟", labels: { en: "Fries",      it: "Patatine fritte", fr: "Frites" } },
+      { base: "pizza",      emoji: "🍕", labels: { en: "Pizza",      it: "Pizza",         fr: "Pizza" } },
+      { base: "sandwich",   emoji: "🥪", labels: { en: "Sandwich",   it: "Panino",        fr: "Sandwich" } },
+      { base: "taco",       emoji: "🌮", labels: { en: "Taco",       it: "Taco",          fr: "Taco" } },
+      { base: "burrito",    emoji: "🌯", labels: { en: "Burrito",    it: "Burrito",       fr: "Burrito" } },
+      { base: "hotdog",     emoji: "🌭", labels: { en: "Hot dog",    it: "Hot dog",       fr: "Hot dog" } },
+
+      // Piatti composti
+      { base: "salad",      emoji: "🥗", labels: { en: "Salad",      it: "Insalata",      fr: "Salade" } },
+      { base: "soup",       emoji: "🍲", labels: { en: "Soup",       it: "Zuppa",         fr: "Soupe" } },
+      { base: "popcorn",    emoji: "🍿", labels: { en: "Popcorn",    it: "Popcorn",       fr: "Popcorn" } },
+
+      // Dolci
+      { base: "chocolate",  emoji: "🍫", labels: { en: "Chocolate",  it: "Cioccolato",    fr: "Chocolat" } },
+      { base: "candy",      emoji: "🍬", labels: { en: "Candy",      it: "Caramelle",     fr: "Bonbons" } },
+      { base: "lollipop",   emoji: "🍭", labels: { en: "Lollipop",   it: "Lecca-lecca",   fr: "Sucette" } },
+      { base: "doughnut",   emoji: "🍩", labels: { en: "Doughnut",   it: "Ciambella",     fr: "Beignet" } },
+      { base: "cookie",     emoji: "🍪", labels: { en: "Cookie",     it: "Biscotto",      fr: "Cookie" } },
+      { base: "cake",       emoji: "🍰", labels: { en: "Cake",       it: "Torta",         fr: "Gâteau" } },
+      { base: "birthday_cake", emoji:"🎂",labels:{ en:"Birthday cake", it:"Torta di compleanno", fr:"Gâteau d'anniversaire" } },
+      { base: "cupcake",    emoji: "🧁", labels: { en: "Cupcake",    it: "Cupcake",       fr: "Cupcake" } },
+      { base: "pie",        emoji: "🥧", labels: { en: "Pie",        it: "Crostata",      fr: "Tarte" } },
+      { base: "icecream",   emoji: "🍨", labels: { en: "Ice cream",  it: "Gelato",        fr: "Glace" } },
+      { base: "icecream_cone", emoji:"🍦",labels:{ en:"Ice cream cone", it:"Gelato cono", fr:"Cornet de glace" } },
+
+      // Bevande
+      { base: "coffee",     emoji: "☕", labels: { en: "Coffee",     it: "Caffè",         fr: "Café" } },
+      { base: "tea",        emoji: "🍵", labels: { en: "Tea",        it: "Tè",            fr: "Thé" } },
+      { base: "beer",       emoji: "🍺", labels: { en: "Beer",       it: "Birra",         fr: "Bière" } },
+      { base: "wine",       emoji: "🍷", labels: { en: "Wine",       it: "Vino",          fr: "Vin" } },
+      { base: "cocktail",   emoji: "🍹", labels: { en: "Cocktail",   it: "Cocktail",      fr: "Cocktail" } },
+      { base: "soft_drink", emoji: "🥤", labels: { en: "Soft drink", it: "Bibita",        fr: "Soda" } },
+      { base: "juice",      emoji: "🧃", labels: { en: "Juice",      it: "Succo",         fr: "Jus" } }
+    ];
+
+    const DEFAULT_INGREDIENT_DICT = {};
+    const DEFAULT_INGREDIENT_BASES = EMOJI_INGREDIENTS.map((i) => i.base);
+    EMOJI_INGREDIENTS.forEach((i) => {
+      DEFAULT_INGREDIENT_DICT[i.base] = { ...i.labels }; // solo testo, niente emoji
+    });
+
+    // 🔹 NORMALIZZAZIONE + SINONIMI + LOGICA IA MISTA
+
+    // Normalizza il nome di un ingrediente: minuscole, senza emoji, senza accenti, plurali semplici
+    function normalizeIngredientKey(str) {
+      if (!str) return "";
+      let s = String(str).toLowerCase().trim();
+
+      // rimuovi emoji iniziali
+      s = s.replace(/^[\p{Emoji_Presentation}\p{Extended_Pictographic}]+/gu, "").trim();
+
+      // rimuovi accenti base
+      s = s
+        .replace(/[àáâãäå]/g, "a")
+        .replace(/[èéêë]/g, "e")
+        .replace(/[ìíîï]/g, "i")
+        .replace(/[òóôõö]/g, "o")
+        .replace(/[ùúûü]/g, "u");
+
+      // plurali molto semplici (EN/FR)
+      if (s.endsWith("es") && s.length > 4) {
+        s = s.slice(0, -2);
+      } else if (s.endsWith("s") && s.length > 3) {
+        s = s.slice(0, -1);
+      }
+
+      return s;
+    }
+
+    // Sinonimi base -> chiave "canonica"
+    const INGREDIENT_SYNONYMS = {
+      // esempi italiani
+      "parmigiano": "parmesan",
+      "grana": "parmesan",
+      "zucchine": "zucchini",
+      "zucchina": "zucchini",
+      "peperoni": "pepper",
+      "peperone": "pepper",
+
+      // esempi inglesi
+      "ground beef": "beef",
+      "minced meat": "beef",
+
+      // puoi aggiungerne quanti vuoi
+    };
+
+    // Usa prima normalizzazione, poi sinonimi
+    function canonicalIngredient(name) {
+      const norm = normalizeIngredientKey(name);
+      return INGREDIENT_SYNONYMS[norm] || norm;
+    }
+
+    // Decide se ha senso chiamare la IA per questo ingrediente
+    function needsAIIngredientEnrichment(baseKey) {
+      const dictEntry = state.ingredientDict[baseKey];
+      const emojiEntry = findEmojiEntry(baseKey);
+
+      // Se è un ingrediente emoji di default
+      if (emojiEntry) {
+        if (!dictEntry) return true;
+        const langs = ["en", "it", "fr"];
+        const missing = langs.some((l) => !dictEntry[l]);
+        return missing;
+      }
+
+      // Se non abbiamo proprio l'entry, chiediamo alla IA
+      if (!dictEntry) return true;
+
+      // Se l'entry esiste ma manca qualche lingua
+      const langs = ["en", "it", "fr"];
+      return langs.some((l) => !dictEntry[l]);
+    }
+
+    // Chiamata alla Netlify Function che usa un modello IA (solo se serve)
+    function requestAIForIngredientIfNeeded(rawName) {
+      const base = canonicalIngredient(rawName);
+      if (!base) return;
+
+      if (!needsAIIngredientEnrichment(base)) {
+        return; // niente IA: abbiamo già info sufficienti
+      }
+
+      // Evita chiamate duplicate per lo stesso ingrediente in poco tempo
+      if (!requestAIForIngredientIfNeeded._pending) {
+        requestAIForIngredientIfNeeded._pending = new Set();
+      }
+      if (requestAIForIngredientIfNeeded._pending.has(base)) return;
+      requestAIForIngredientIfNeeded._pending.add(base);
+
+      fetch(
+        "/.netlify/functions/translate-ingredient?q=" +
+          encodeURIComponent(rawName)
+      )
+        .then((res) => {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then((data) => {
+          const resultBase = canonicalIngredient(data.base || base);
+          const entry = state.ingredientDict[resultBase] || {
+            en: "",
+            it: "",
+            fr: ""
+          };
+
+          entry.en = data.en || entry.en || rawName;
+          entry.it = data.it || entry.it || rawName;
+          entry.fr = data.fr || entry.fr || rawName;
+
+          state.ingredientDict[resultBase] = entry;
+          state.ingredientsSet.add(resultBase);
+          saveState();
+          renderIngredientSuggestions();
+          renderIngredientDict();
+          renderRecipesList();
+        })
+        .catch((err) => {
+          console.error("AI ingredient translation error", err);
+        })
+        .finally(() => {
+          requestAIForIngredientIfNeeded._pending.delete(base);
+        });
+    }
+
+    function findEmojiEntry(name) {
+      if (!name) return null;
+      const norm = normalizeIngredientKey(name);
+      return EMOJI_INGREDIENTS.find((i) => {
+        if (normalizeIngredientKey(i.base) === norm) return true;
+        return Object.values(i.labels).some(
+          (lbl) => normalizeIngredientKey(lbl) === norm
+        );
+      });
+    }
+
+    function getIngredientEmoji(name) {
+      const entry = findEmojiEntry(name);
+      return entry ? entry.emoji : "";
+    }
+
+    function getIngredientLabel(name) {
+      if (!name) return "";
+      const lang = currentLang || "en";
+      const base = canonicalIngredient(name);
+
+      // 1) emoji predefinite
+      const entry = findEmojiEntry(base);
+      if (entry) {
+        const text = entry.labels[lang] || entry.labels.en || base;
+        return entry.emoji + " " + text; // emoji + nome
+      }
+
+      // 2) dizionario utente
+      const dict = state.ingredientDict || {};
+      const d = dict[base];
+      if (d) {
+        return d[lang] || d.en || base;
+      }
+
+      // 3) fallback
+      return base;
+    }
+
+    const I18N = {
+      en: {
+        appTitle: "My recipes",
+        tabForm: "Add",
+        tabList: "Cookbook",
+        tabSettings: "Settings",
+        formTitleNew: "New recipe",
+        formTitleEdit: "Edit recipe",
+        labelTitle: "Title",
+        labelCourseTypes: "Course type (one or more)",
+        placeholderNewCourse: "New type (e.g. Street food)",
+        btnAddCourseType: "Add type",
+        labelIngredients: "Ingredients",
+        btnAddIngredient: "+ ingredient",
+        labelVariants: "Possible variants (one per line)",
+        placeholderVariants: "E.g. vegetarian version\nWith speck instead of ham",
+        labelSteps: "Recipe steps",
+        btnAddStep: "+ step",
+        labelRatings: "Ratings (1–5)",
+        labelTaste: "Taste",
+        labelEase: "Ease",
+        labelPrice: "Price",
+        labelFavorite: "Add to favorites",
+        labelPhoto: "Photo (optional)",
+        btnSaveRecipe: "Save recipe",
+        btnUpdateRecipe: "Update recipe",
+        btnCancelEdit: "Cancel edit",
+        titleSavedRecipes: "Saved recipes",
+        labelFilterCourse: "Course type",
+        optionAllCourses: "All",
+        labelFilterIngredients: "Ingredients (comma separated)",
+        placeholderFilterIngredients: "e.g. zucchini, parmesan",
+        labelIngredientLogic: "Ingredients: AND / OR",
+        labelLogicAnd: "all (AND)",
+        labelLogicOr: "at least one (OR)",
+        labelFilterOwner: "Source",
+        optionOwnerAll: "All recipes",
+        optionOwnerMe: "My recipes",
+        labelSortBy: "Sort by",
+        sortTitle: "Title (A–Z)",
+        sortTaste: "Taste",
+        sortEase: "Ease",
+        sortPrice: "Price",
+        btnApplyFilters: "Apply",
+        btnClearFilters: "Clear filters",
+        titleSettings: "Settings",
+        labelLanguage: "Language",
+        labelDeviceType: "Device type",
+        deviceMobile: "Mobile (phone / tablet)",
+        devicePc: "PC / large screen",
+        labelManageCourses: "Manage course types",
+        textManageCoursesHelp:
+          "You can add new types from the main form. Here you can remove the ones you no longer use.",
+        labelFriends: "Friends",
+        textFriendsHelp:
+          "Add friends and import their recipe JSON files into their own folder. You can then filter recipes by friend.",
+        placeholderFriendName: "Friend name",
+        btnAddFriend: "Add friend",
+        labelIngredientDict: "Ingredient dictionary",
+        textIngredientDictHelp:
+          "For each base ingredient name you can optionally set translations in EN / IT / FR. When you change language, ingredients will be shown using these translations when available.",
+        ingredientDictEmpty: "No ingredients yet. Add some ingredients to your recipes and they will appear here.",
+        ingredientDictSearchPlaceholder: "Search ingredient...",
+        labelBackup: "Backup, export and sharing",
+        textBackupHelp:
+          "Export all your recipes to a JSON file so you can share or import them on another device.",
+        btnExport: "Export recipes",
+        btnImport: "Import recipes",
+        friendsNone: "No friends yet.",
+        friendImportBtn: "Import recipes",
+        friendRemoveBtn: "Remove",
+        friendRemoveConfirm: 'Remove friend "{name}" and all their recipes?',
+        coursesNone: "No course types defined.",
+        courseRemoveBtn: "Remove",
+        courseRemoveConfirm: 'Remove course type "{name}"?',
+        noRecipesFilters: "No recipes found with these filters.",
+        ratingsLine: "Taste: {g} · Ease: {f} · Price: {p}",
+        stepsTitle: "Steps:",
+        alertNoCourse: "Select at least one course type.",
+        alertNoRecipesToExport: "There are no recipes to export.",
+        alertImportNoRecipes: "The file does not contain valid recipes.",
+        alertImportDone: "Import completed!",
+        alertInvalidFile: "Invalid file. Make sure it is a JSON file exported from the app.",
+        confirmMergeImport:
+          "Do you want to MERGE imported recipes with existing ones?\n\nOK = merge\nCancel = replace all existing recipes",
+        confirmMergeFriendImport:
+          "Import recipes into this friend’s folder. They will not change your own recipes.",
+        ownerMeLabel: "Me",
+        alertFriendNameRequired: "Please enter a friend name.",
+        ingredientRemoveBtn: "Delete",
+        ingredientRemoveConfirm: 'Remove "{name}" from the dictionary? (translations will be deleted)',
+        recipeRemoveBtn: "Delete recipe",
+        recipeRemoveConfirm: 'Delete recipe "{name}"?',
+        labelFilters: "Filters",
+        recipesFoundLabel: "{count} recipes found",
+        favoriteBadge: "Favorite",
+        filterTitle: "Title contains",
+        placeholderFilterTitle: "e.g. lasagna",
+        alertRecipeSaved: "Recipe saved!"
+      },
+      it: {
+        appTitle: "Le mie ricette",
+        tabForm: "Add",
+        tabList: "Cookbook",
+        tabSettings: "Impostazioni",
+        formTitleNew: "Nuova ricetta",
+        formTitleEdit: "Modifica ricetta",
+        labelTitle: "Titolo",
+        labelCourseTypes: "Tipo di portata (una o più)",
+        placeholderNewCourse: "Nuovo tipo (es. Street food)",
+        btnAddCourseType: "Aggiungi tipo",
+        labelIngredients: "Ingredienti",
+        btnAddIngredient: "+ ingrediente",
+        labelVariants: "Possibili varianti (una per riga)",
+        placeholderVariants: "Es. versione vegetariana\nCon speck al posto del prosciutto",
+        labelSteps: "Passaggi della ricetta",
+        btnAddStep: "+ passaggio",
+        labelRatings: "Valutazioni (1–5)",
+        labelTaste: "Gusto",
+        labelEase: "Facilità",
+        labelPrice: "Prezzo",
+        labelFavorite: "Aggiungi ai preferiti",
+        labelPhoto: "Foto (opzionale)",
+        btnSaveRecipe: "Salva ricetta",
+        btnUpdateRecipe: "Aggiorna ricetta",
+        btnCancelEdit: "Annulla modifica",
+        titleSavedRecipes: "Ricette salvate",
+        labelFilterCourse: "Tipo di portata",
+        optionAllCourses: "Tutte",
+        labelFilterIngredients: "Ingredienti (separati da virgola)",
+        placeholderFilterIngredients: "es. zucchine, parmigiano",
+        labelIngredientLogic: "Ingredienti: E / O",
+        labelLogicAnd: "tutti (E)",
+        labelLogicOr: "almeno uno (O)",
+        labelFilterOwner: "Origine",
+        optionOwnerAll: "Tutte le ricette",
+        optionOwnerMe: "Le mie ricette",
+        labelSortBy: "Ordina per",
+        sortTitle: "Titolo (A–Z)",
+        sortTaste: "Gusto",
+        sortEase: "Facilità",
+        sortPrice: "Prezzo",
+        btnApplyFilters: "Applica",
+        btnClearFilters: "Pulisci filtri",
+        titleSettings: "Impostazioni",
+        labelLanguage: "Lingua",
+        labelDeviceType: "Tipo di dispositivo",
+        deviceMobile: "Mobile (telefono / tablet)",
+        devicePc: "PC / schermo grande",
+        labelManageCourses: "Gestione tipi di portata",
+        textManageCoursesHelp:
+          "Puoi aggiungere nuovi tipi dal form principale. Qui puoi rimuovere quelli che non usi più.",
+        labelFriends: "Amici",
+        textFriendsHelp:
+          "Aggiungi amici e importa i loro file JSON di ricette in una cartella dedicata. Poi puoi filtrare per amico.",
+        placeholderFriendName: "Nome amico",
+        btnAddFriend: "Aggiungi amico",
+        labelIngredientDict: "Dizionario ingredienti",
+        textIngredientDictHelp:
+          "Per ogni nome base dell'ingrediente puoi opzionalmente indicare le traduzioni in EN / IT / FR. Quando cambi lingua, gli ingredienti verranno mostrati usando queste traduzioni se presenti.",
+        ingredientDictEmpty:
+          "Ancora nessun ingrediente. Aggiungi qualche ingrediente alle ricette e comparirà qui.",
+        ingredientDictSearchPlaceholder: "Cerca ingrediente...",
+        labelBackup: "Backup, esportazione e condivisione",
+        textBackupHelp:
+          "Esporta tutte le tue ricette in un file JSON, così puoi condividerle o importarle su un altro dispositivo.",
+        btnExport: "Esporta ricette",
+        btnImport: "Importa ricette",
+        friendsNone: "Nessun amico aggiunto.",
+        friendImportBtn: "Importa ricette",
+        friendRemoveBtn: "Rimuovi",
+        friendRemoveConfirm: 'Rimuovere l\'amico "{name}" e tutte le sue ricette?',
+        coursesNone: "Nessun tipo di portata definito.",
+        courseRemoveBtn: "Rimuovi",
+        courseRemoveConfirm: 'Rimuovere il tipo di portata "{name}"?',
+        noRecipesFilters: "Nessuna ricetta trovata con questi filtri.",
+        ratingsLine: "Gusto: {g} · Facilità: {f} · Prezzo: {p}",
+        stepsTitle: "Passaggi:",
+        alertNoCourse: "Seleziona almeno un tipo di portata.",
+        alertNoRecipesToExport: "Non ci sono ricette da esportare.",
+        alertImportNoRecipes: "Il file non contiene ricette valide.",
+        alertImportDone: "Importazione completata!",
+        alertInvalidFile: "File non valido. Assicurati che sia un file JSON esportato dall'app.",
+        confirmMergeImport:
+          "Vuoi UNIRE le ricette importate con quelle esistenti?\n\nOK = unisci\nAnnulla = sostituisci completamente quelle esistenti",
+        confirmMergeFriendImport:
+          "Importa le ricette nella cartella di questo amico. Non modificheranno le tue ricette.",
+        ownerMeLabel: "Io",
+        alertFriendNameRequired: "Inserisci un nome per l'amico.",
+        ingredientRemoveBtn: "Elimina",
+        ingredientRemoveConfirm: 'Rimuovere "{name}" dal dizionario? (le traduzioni verranno cancellate)',
+        recipeRemoveBtn: "Elimina ricetta",
+        recipeRemoveConfirm: 'Eliminare la ricetta "{name}"?',
+        labelFilters: "Filtri",
+        recipesFoundLabel: "{count} ricette trovate",
+        favoriteBadge: "Preferita",
+        filterTitle: "Titolo contiene",
+        placeholderFilterTitle: "es. lasagne",
+        alertRecipeSaved: "Ricetta salvata!"
+      },
+      fr: {
+        appTitle: "Mes recettes",
+        tabForm: "Add",
+        tabList: "Cookbook",
+        tabSettings: "Paramètres",
+        formTitleNew: "Nouvelle recette",
+        formTitleEdit: "Modifier la recette",
+        labelTitle: "Titre",
+        labelCourseTypes: "Type de plat (un ou plusieurs)",
+        placeholderNewCourse: "Nouveau type (ex. Street food)",
+        btnAddCourseType: "Ajouter un type",
+        labelIngredients: "Ingrédients",
+        btnAddIngredient: "+ ingrédient",
+        labelVariants: "Variantes possibles (une par ligne)",
+        placeholderVariants: "Ex. version végétarienne\nAvec speck à la place du jambon",
+        labelSteps: "Étapes de la recette",
+        btnAddStep: "+ étape",
+        labelRatings: "Notes (1–5)",
+        labelTaste: "Goût",
+        labelEase: "Facilité",
+        labelPrice: "Prix",
+        labelFavorite: "Ajouter aux favoris",
+        labelPhoto: "Photo (optionnelle)",
+        btnSaveRecipe: "Enregistrer la recette",
+        btnUpdateRecipe: "Mettre à jour la recette",
+        btnCancelEdit: "Annuler la modification",
+        titleSavedRecipes: "Recettes enregistrées",
+        labelFilterCourse: "Type de plat",
+        optionAllCourses: "Tous",
+        labelFilterIngredients: "Ingrédients (séparés par des virgules)",
+        placeholderFilterIngredients: "ex. courgettes, parmesan",
+        labelIngredientLogic: "Ingrédients : ET / OU",
+        labelLogicAnd: "tous (ET)",
+        labelLogicOr: "au moins un (OU)",
+        labelFilterOwner: "Source",
+        optionOwnerAll: "Toutes les recettes",
+        optionOwnerMe: "Mes recettes",
+        labelSortBy: "Trier par",
+        sortTitle: "Titre (A–Z)",
+        sortTaste: "Goût",
+        sortEase: "Facilité",
+        sortPrice: "Prix",
+        btnApplyFilters: "Appliquer",
+        btnClearFilters: "Réinitialiser",
+        titleSettings: "Paramètres",
+        labelLanguage: "Langue",
+        labelDeviceType: "Type d'appareil",
+        deviceMobile: "Mobile (téléphone / tablette)",
+        devicePc: "PC / grand écran",
+        labelManageCourses: "Gérer les types de plat",
+        textManageCoursesHelp:
+          "Vous pouvez ajouter de nouveaux types depuis le formulaire principal. Ici vous pouvez supprimer ceux que vous n'utilisez plus.",
+        labelFriends: "Amis",
+        textFriendsHelp:
+          "Ajoutez des amis et importez leurs fichiers JSON de recettes dans leur propre dossier. Vous pourrez ensuite filtrer par ami.",
+        placeholderFriendName: "Nom de l'ami",
+        btnAddFriend: "Ajouter un ami",
+        labelIngredientDict: "Dictionnaire des ingrédients",
+        textIngredientDictHelp:
+          "Pour chaque nom d'ingrédient de base, vous pouvez définir des traductions EN / IT / FR. Quand vous changez de langue, les ingrédients sont affichés avec ces traductions si disponibles.",
+        ingredientDictEmpty:
+          "Aucun ingrédient pour l'instant. Ajoutez des ingrédients à vos recettes et ils apparaîtront ici.",
+        ingredientDictSearchPlaceholder: "Rechercher un ingrédient...",
+        labelBackup: "Sauvegarde, exportation et partage",
+        textBackupHelp:
+          "Exportez toutes vos recettes dans un fichier JSON afin de pouvoir les partager ou les importer sur un autre appareil.",
+        btnExport: "Exporter les recettes",
+        btnImport: "Importer des recettes",
+        friendsNone: "Aucun ami ajouté.",
+        friendImportBtn: "Importer des recettes",
+        friendRemoveBtn: "Supprimer",
+        friendRemoveConfirm: 'Supprimer l\'ami "{name}" et toutes ses recettes ?',
+        coursesNone: "Aucun type de plat défini.",
+        courseRemoveBtn: "Supprimer",
+        courseRemoveConfirm: 'Supprimer le type de plat "{name}" ?',
+        noRecipesFilters: "Aucune recette trouvée avec ces filtres.",
+        ratingsLine: "Goût : {g} · Facilité : {f} · Prix : {p}",
+        stepsTitle: "Étapes :",
+        alertNoCourse: "Sélectionnez au moins un type de plat.",
+        alertNoRecipesToExport: "Il n'y a aucune recette à exporter.",
+        alertImportNoRecipes: "Il file ne contient pas de recettes valides.",
+        alertImportDone: "Importation terminée !",
+        alertInvalidFile: "Fichier invalide. Assurez-vous qu'il s'agit d'un JSON exporté depuis l'application.",
+        confirmMergeImport:
+          "Voulez-vous FUSIONNER les recettes importées avec celles existantes ?\n\nOK = fusionner\nAnnuler = tout remplacer",
+        confirmMergeFriendImport:
+          "Importer les recettes dans le dossier de cet ami. Vos propres recettes ne seront pas modifiées.",
+        ownerMeLabel: "Moi",
+        alertFriendNameRequired: "Entrez un nom d'ami.",
+        ingredientRemoveBtn: "Supprimer",
+        ingredientRemoveConfirm: 'Supprimer "{name}" du dictionnaire ? (les traductions seront supprimées)',
+        recipeRemoveBtn: "Supprimer la recette",
+        recipeRemoveConfirm: 'Supprimer la recette "{name}" ?',
+        labelFilters: "Filtres",
+        recipesFoundLabel: "{count} recettes trouvées",
+        favoriteBadge: "Favori",
+        filterTitle: "Titre contient",
+        placeholderFilterTitle: "ex. lasagnes",
+        alertRecipeSaved: "Recette enregistrée !"
+      }
+    };
+
+    let state = {
+      portate: [...defaultPortate],
+      recipes: [],
+      ingredientsSet: new Set(),
+      ingredientDict: { ...DEFAULT_INGREDIENT_DICT },   // baseName -> {en,it,fr}
+      settings: {
+        deviceMode: null,
+        language: "en"
+      },
+      friends: []
+    };
+
+    let currentEditingId = null;
+    let currentLang = "en";
+    let currentFriendImportId = null;
+
+    function t(key) {
+      const dict = I18N[currentLang] || I18N.en;
+      return dict[key] || I18N.en[key] || key;
+    }
+
+    function normalizeRecipe(r) {
+      const copy = { ...r };
+      if (!copy.id) {
+        copy.id = Date.now() + Math.random();
+      }
+      if (!copy.portate && copy.portata) {
+        copy.portate = [copy.portata];
+        delete copy.portata;
+      }
+      if (!Array.isArray(copy.portate)) {
+        copy.portate = [];
+      }
+      if (!Array.isArray(copy.ingredienti)) {
+        copy.ingredienti = [];
+      }
+      if (!Array.isArray(copy.varianti)) {
+        copy.varianti = [];
+      }
+      if (!Array.isArray(copy.passaggi)) {
+        copy.passaggi = [];
+      }
+      if (!copy.valutazioni) {
+        copy.valutazioni = { gusto: 0, facilita: 0, prezzo: 0 };
+      } else {
+        copy.valutazioni.gusto = Number(copy.valutazioni.gusto || 0);
+        copy.valutazioni.facilita = Number(copy.valutazioni.facilita || 0);
+        copy.valutazioni.prezzo = Number(copy.valutazioni.prezzo || 0);
+      }
+      copy.preferito = !!copy.preferito;
+      if (!copy.owner) {
+        copy.owner = "me";
+      }
+      return copy;
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          state.portate =
+            parsed.portate && parsed.portate.length ? parsed.portate : [...defaultPortate];
+          if (Array.isArray(parsed.recipes)) {
+            state.recipes = parsed.recipes.map(normalizeRecipe);
+          } else {
+            state.recipes = [];
+          }
+          state.settings = parsed.settings || { deviceMode: null, language: "en" };
+          state.friends = Array.isArray(parsed.friends) ? parsed.friends : [];
+          state.ingredientDict = parsed.ingredientDict || { ...DEFAULT_INGREDIENT_DICT };
+        } catch (e) {
+          console.error("Error parsing localStorage", e);
+          state.ingredientDict = { ...DEFAULT_INGREDIENT_DICT };
+        }
+      } else {
+        state.ingredientDict = { ...DEFAULT_INGREDIENT_DICT };
+      }
+
+      // Ensure emoji defaults are present
+      EMOJI_INGREDIENTS.forEach((i) => {
+        if (!state.ingredientDict[i.base]) {
+          state.ingredientDict[i.base] = { ...i.labels };
+        }
+      });
+
+      if (!state.settings || !state.settings.deviceMode) {
+        state.settings = {
+          ...state.settings,
+          deviceMode: window.innerWidth < 700 ? "mobile" : "pc"
+        };
+      }
+      if (!state.settings.language) {
+        state.settings.language = "en";
+      }
+      currentLang = state.settings.language;
+      rebuildIngredientsSet();
+    }
+
+    function saveState() {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          portate: state.portate,
+          recipes: state.recipes,
+          settings: state.settings,
+          friends: state.friends,
+          ingredientDict: state.ingredientDict
+        })
+      );
+    }
+
+    function applyDeviceMode() {
+      const mode = state.settings?.deviceMode === "pc" ? "pc" : "mobile";
+      document.body.classList.remove("mode-mobile", "mode-pc");
+      document.body.classList.add("mode-" + mode);
+
+      const radio = document.querySelector(
+        'input[name="deviceMode"][value="' + mode + '"]'
+      );
+      if (radio) radio.checked = true;
+    }
+
+    function applyLanguageToDOM() {
+      const dict = I18N[currentLang] || I18N.en;
+
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (dict[key]) {
+          el.placeholder = dict[key];
+        }
+      });
+
+      const formTitle = document.getElementById("formTitle");
+      if (currentEditingId) {
+        formTitle.textContent = t("formTitleEdit");
+      } else {
+        formTitle.textContent = t("formTitleNew");
+      }
+
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.textContent = currentEditingId ? t("btnUpdateRecipe") : t("btnSaveRecipe");
+
+      const filterOwner = document.getElementById("filterOwner");
+      if (filterOwner) {
+        const optAll = filterOwner.querySelector('option[value=""]');
+        const optMe = filterOwner.querySelector('option[value="me"]');
+        if (optAll) optAll.textContent = t("optionOwnerAll");
+        if (optMe) optMe.textContent = t("optionOwnerMe");
+      }
+
+      const langSelect = document.getElementById("languageSelect");
+      if (langSelect) {
+        langSelect.value = currentLang;
+      }
+    }
+
+    function setLanguage(langCode) {
+      currentLang = I18N[langCode] ? langCode : "en";
+      state.settings.language = currentLang;
+      saveState();
+      applyLanguageToDOM();
+      renderPortataOptions();
+      renderPortataManagement();
+      renderFriends();
+      renderIngredientDict();
+      renderRecipesList();
+      renderIngredientSuggestions();
+    }
+
+    function rebuildIngredientsSet() {
+      state.ingredientsSet = new Set();
+
+      state.recipes.forEach((r) => {
+        (r.ingredienti || []).forEach((ing) => {
+          if (ing && ing.nome) {
+            state.ingredientsSet.add(ing.nome.trim());
+          }
+        });
+      });
+
+      Object.keys(state.ingredientDict || {}).forEach((base) => {
+        state.ingredientsSet.add(base);
+      });
+
+      renderIngredientSuggestions();
+      renderIngredientDict();
+    }
+
+    function renderPortataOptions() {
+      const container = document.getElementById("portataOptions");
+      const filterSelect = document.getElementById("filterPortata");
+      container.innerHTML = "";
+      filterSelect.innerHTML = "";
+
+      const allOption = document.createElement("option");
+      allOption.value = "";
+      allOption.textContent = t("optionAllCourses");
+      filterSelect.appendChild(allOption);
+
+      state.portate.forEach((key) => {
+        const label = document.createElement("label");
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.name = "portataOption";
+        cb.value = key;
+        label.appendChild(cb);
+        label.appendChild(document.createTextNode(getCourseLabel(key)));
+        container.appendChild(label);
+
+        const opt = document.createElement("option");
+        opt.value = key;
+        opt.textContent = getCourseLabel(key);
+        filterSelect.appendChild(opt);
+      });
+    }
+
+    function renderPortataManagement() {
+      const list = document.getElementById("portataManageList");
+      list.innerHTML = "";
+      if (!state.portate.length) {
+        const span = document.createElement("span");
+        span.className = "muted";
+        span.textContent = I18N[currentLang].coursesNone;
+        list.appendChild(span);
+        return;
+      }
+      state.portate.forEach((key) => {
+        const row = document.createElement("div");
+        row.className = "portata-manage-row";
+
+        const name = document.createElement("span");
+        name.textContent = getCourseLabel(key);
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "small-btn danger";
+        btn.textContent = t("courseRemoveBtn");
+        btn.addEventListener("click", () => {
+          if (!confirm(t("courseRemoveConfirm").replace("{name}", getCourseLabel(key)))) return;
+          removePortata(key);
+        });
+
+        row.appendChild(name);
+        row.appendChild(btn);
+        list.appendChild(row);
+      });
+    }
+
+    function removePortata(val) {
+      state.portate = state.portate.filter((p) => p !== val);
+      state.recipes.forEach((r) => {
+        if (Array.isArray(r.portate)) {
+          r.portate = r.portate.filter((p) => p !== val);
+        }
+      });
+      saveState();
+      renderPortataOptions();
+      renderPortataManagement();
+      renderRecipesList();
+    }
+
+    function renderIngredientSuggestions() {
+      const datalist = document.getElementById("ingredientSuggestions");
+      if (!datalist) return;
+      datalist.innerHTML = "";
+      const lang = currentLang || "en";
+
+      const suggestionsMap = new Map();
+
+      // 1) Emoji di default: sempre disponibili, nella lingua attiva
+      EMOJI_INGREDIENTS.forEach((item) => {
+        const display = item.labels[lang] || item.labels.en || item.base;
+        const key = display.toLowerCase();
+        suggestionsMap.set(key, {
+          display,
+          hasEmoji: true,
+          emoji: item.emoji
+        });
+      });
+
+      // 2) Ingredienti usati/salvati dall'utente + dizionario
+      state.ingredientsSet.forEach((name) => {
+        const entry = findEmojiEntry(name);
+        let display = name;
+
+        const dictEntry = state.ingredientDict[name];
+        if (dictEntry && dictEntry[lang]) {
+          display = dictEntry[lang];
+        } else if (entry && entry.labels[lang]) {
+          display = entry.labels[lang];
+        }
+
+        const key = String(display).toLowerCase();
+        if (!suggestionsMap.has(key)) {
+          suggestionsMap.set(key, {
+            display,
+            hasEmoji: !!entry,
+            emoji: entry ? entry.emoji : ""
+          });
+        }
+      });
+
+      const suggestions = Array.from(suggestionsMap.values());
+
+      // Emoji in cima, poi ordine alfabetico nella lingua attuale
+      suggestions.sort((a, b) => {
+        if (a.hasEmoji && !b.hasEmoji) return -1;
+        if (!a.hasEmoji && b.hasEmoji) return 1;
+        return a.display.localeCompare(b.display, lang);
+      });
+
+      suggestions.forEach((s) => {
+        const opt = document.createElement("option");
+        opt.value = s.display; // nel campo va solo il testo
+        opt.label = s.hasEmoji ? s.emoji + " " + s.display : s.display; // nella lista: emoji + nome
+        datalist.appendChild(opt);
+      });
+    }
+
+    function addIngredientRow(value = "") {
+      const container = document.getElementById("ingredientsContainer");
+      const row = document.createElement("div");
+      row.className = "row-list";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = "ingredientName";
+      input.placeholder = t("labelIngredients");
+      input.setAttribute("list", "ingredientSuggestions");
+      input.autocomplete = "off";
+      input.value = value;
+
+      // fix per evitare duplicazioni da datalist tipo "tomato tomato"
+      input.addEventListener("input", () => {
+        const parts = input.value.split(" ");
+        if (parts.length > 1 && parts[0] === parts[1]) {
+          input.value = parts[0];
+        }
+      });
+
+      // al blur proviamo a chiedere alla IA (se necessario)
+      input.addEventListener("blur", () => {
+        const raw = input.value.trim();
+        if (!raw) return;
+        requestAIForIngredientIfNeeded(raw);
+      });
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "−";
+      btn.className = "small-btn";
+      btn.addEventListener("click", () => {
+        row.remove();
+      });
+
+      row.appendChild(input);
+      row.appendChild(btn);
+      container.appendChild(row);
+    }
+
+    function addStepRow(value = "") {
+      const container = document.getElementById("stepsContainer");
+      const row = document.createElement("div");
+      row.className = "row-list";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = "stepText";
+      input.placeholder = t("labelSteps");
+      input.autocomplete = "off";
+      input.value = value;
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "−";
+      btn.className = "small-btn";
+      btn.addEventListener("click", () => {
+        row.remove();
+      });
+
+      row.appendChild(input);
+      row.appendChild(btn);
+      container.appendChild(row);
+    }
+
+    function getIngredientTermsForSearch() {
+      const txt = document.getElementById("filterIngredients").value.toLowerCase();
+      return txt
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean)
+        .map((t) => canonicalIngredient(t));
+    }
+
+    function renderFriends() {
+      const list = document.getElementById("friendsList");
+      const filterOwner = document.getElementById("filterOwner");
+      list.innerHTML = "";
+
+      filterOwner.innerHTML = "";
+      const optAll = document.createElement("option");
+      optAll.value = "";
+      optAll.textContent = t("optionOwnerAll");
+      filterOwner.appendChild(optAll);
+
+      const optMe = document.createElement("option");
+      optMe.value = "me";
+      optMe.textContent = t("optionOwnerMe");
+      filterOwner.appendChild(optMe);
+
+      if (!state.friends.length) {
+        const span = document.createElement("span");
+        span.className = "muted";
+        span.textContent = t("friendsNone");
+        list.appendChild(span);
+        return;
+      }
+
+      state.friends.forEach((f) => {
+        const row = document.createElement("div");
+        row.className = "friend-row";
+
+        const name = document.createElement("span");
+        name.textContent = f.name;
+
+        const buttons = document.createElement("div");
+        buttons.style.display = "flex";
+        buttons.style.gap = "0.25rem";
+
+        const importBtn = document.createElement("button");
+        importBtn.type = "button";
+        importBtn.className = "small-btn";
+        importBtn.textContent = t("friendImportBtn");
+        importBtn.addEventListener("click", () => {
+          currentFriendImportId = f.id;
+          const friendFileInput = document.getElementById("friendImportFile");
+          friendFileInput.value = "";
+          friendFileInput.click();
+        });
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "small-btn danger";
+        removeBtn.textContent = t("friendRemoveBtn");
+        removeBtn.addEventListener("click", () => {
+          if (!confirm(t("friendRemoveConfirm").replace("{name}", f.name))) return;
+          removeFriend(f.id);
+        });
+
+        buttons.appendChild(importBtn);
+        buttons.appendChild(removeBtn);
+
+        row.appendChild(name);
+        row.appendChild(buttons);
+        list.appendChild(row);
+
+        const optFriend = document.createElement("option");
+        optFriend.value = String(f.id);
+        optFriend.textContent = f.name;
+        filterOwner.appendChild(optFriend);
+      });
+    }
+
+    function removeFriend(friendId) {
+      state.friends = state.friends.filter((f) => f.id !== friendId);
+      state.recipes = state.recipes.filter((r) => r.owner !== friendId);
+      saveState();
+      rebuildIngredientsSet();
+      renderFriends();
+      renderRecipesList();
+    }
+
+    function renderIngredientDict() {
+      const container = document.getElementById("ingredientDictList");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const searchInput = document.getElementById("ingredientDictSearch");
+      const search = (searchInput ? searchInput.value : "").toLowerCase().trim();
+
+      const allSet = new Set([
+        ...Array.from(state.ingredientsSet),
+        ...Object.keys(state.ingredientDict || {})
+      ]);
+      const allKeys = Array.from(allSet).sort((a, b) =>
+        a.localeCompare(b, currentLang || "en")
+      );
+
+      const filteredKeys = allKeys.filter((base) => {
+        if (!search) return true;
+        const baseLower = base.toLowerCase();
+        if (baseLower.includes(search)) return true;
+        const entry = state.ingredientDict[base];
+        if (entry) {
+          return ["en", "it", "fr"].some((lang) =>
+            (entry[lang] || "").toLowerCase().includes(search)
+          );
+        }
+        return false;
+      });
+
+      if (!filteredKeys.length) {
+        const span = document.createElement("span");
+        span.className = "muted";
+        span.textContent = t("ingredientDictEmpty");
+        container.appendChild(span);
+        return;
+      }
+
+      filteredKeys.forEach((base) => {
+        const row = document.createElement("div");
+        row.className = "ingredient-dict-row";
+
+        const baseSpan = document.createElement("span");
+        baseSpan.className = "base-name";
+        baseSpan.textContent = base;
+
+        const inputsWrap = document.createElement("div");
+        inputsWrap.className = "dict-inputs";
+
+        const langs = ["en", "it", "fr"];
+
+        langs.forEach((lang) => {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.dataset.base = base;
+          input.dataset.lang = lang;
+          input.placeholder = lang.toUpperCase();
+          const entry = state.ingredientDict[base] || {};
+          input.value = entry[lang] || "";
+          input.addEventListener("change", onIngredientDictChange);
+          inputsWrap.appendChild(input);
+        });
+
+        const actionsWrap = document.createElement("div");
+        actionsWrap.className = "dict-actions";
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "small-btn danger";
+        delBtn.textContent = t("ingredientRemoveBtn");
+        delBtn.addEventListener("click", () => {
+          if (!confirm(t("ingredientRemoveConfirm").replace("{name}", base))) return;
+          removeIngredientFromDict(base);
+        });
+        actionsWrap.appendChild(delBtn);
+
+        row.appendChild(baseSpan);
+        row.appendChild(inputsWrap);
+        row.appendChild(actionsWrap);
+        container.appendChild(row);
+      });
+    }
+
+    function onIngredientDictChange(e) {
+      const base = e.target.dataset.base;
+      const lang = e.target.dataset.lang;
+      if (!base || !lang) return;
+      if (!state.ingredientDict[base]) {
+        state.ingredientDict[base] = { en: "", it: "", fr: "" };
+      }
+      state.ingredientDict[base][lang] = e.target.value;
+      saveState();
+      renderRecipesList();
+      renderIngredientSuggestions();
+    }
+
+    function removeIngredientFromDict(base) {
+      if (state.ingredientDict[base]) {
+        delete state.ingredientDict[base];
+        saveState();
+        rebuildIngredientsSet();
+        renderRecipesList();
+      }
+    }
+
+    function renderRecipesList() {
+      const list = document.getElementById("recipesList");
+      list.innerHTML = "";
+
+      const portataFilter = document.getElementById("filterPortata").value;
+      const ownerFilter = document.getElementById("filterOwner").value;
+      const terms = getIngredientTermsForSearch();
+      const mode = document.querySelector('input[name="ingredientMode"]:checked').value;
+      const sortBy = document.getElementById("sortBy").value;
+      const titleTerm = document.getElementById("filterTitle").value.toLowerCase().trim();
+
+      let recipes = state.recipes.slice();
+
+      if (portataFilter) {
+        recipes = recipes.filter((r) =>
+          Array.isArray(r.portate)
+            ? r.portate.includes(portataFilter)
+            : r.portata === portataFilter
+        );
+      }
+
+      if (ownerFilter) {
+        recipes = recipes.filter((r) => String(r.owner || "me") === ownerFilter);
+      }
+
+      if (titleTerm) {
+        recipes = recipes.filter((r) =>
+          (r.titolo || "").toLowerCase().includes(titleTerm)
+        );
+      }
+
+      if (terms.length > 0) {
+        recipes = recipes.filter((r) => {
+          const ingredientNames = (r.ingredienti || []).map((i) =>
+            canonicalIngredient(i.nome || "")
+          );
+          if (mode === "and") {
+            return terms.every((term) =>
+              ingredientNames.some((n) => n.includes(term))
+            );
+          } else {
+            return terms.some((term) =>
+              ingredientNames.some((n) => n.includes(term))
+            );
+          }
+        });
+      }
+
+      // Preferiti in cima
+      recipes.sort((a, b) => {
+        if (a.preferito && !b.preferito) return -1;
+        if (!a.preferito && b.preferito) return 1;
+
+        if (sortBy === "titolo") {
+          return (a.titolo || "").localeCompare(b.titolo || "", currentLang);
+        } else {
+          const av = (a.valutazioni && a.valutazioni[sortBy]) || 0;
+          const bv = (b.valutazioni && b.valutazioni[sortBy]) || 0;
+          return bv - av;
+        }
+      });
+
+      // Conteggio ricette
+      const countInfo = document.createElement("div");
+      countInfo.className = "muted";
+      countInfo.style.marginBottom = "0.5rem";
+      const label = t("recipesFoundLabel");
+      countInfo.textContent = label.replace("{count}", recipes.length);
+      list.appendChild(countInfo);
+
+      if (!recipes.length) {
+        const empty = document.createElement("div");
+        empty.className = "muted";
+        empty.textContent = t("noRecipesFilters");
+        list.appendChild(empty);
+        return;
+      }
+
+      recipes.forEach((r) => {
+        const card = document.createElement("article");
+        card.className = "recipe-card";
+        if (r.id === currentEditingId) {
+          card.classList.add("editing");
+        }
+
+        const header = document.createElement("div");
+        header.className = "recipe-header";
+
+        const title = document.createElement("div");
+        title.className = "recipe-header-title";
+
+        const titleText = document.createElement("div");
+        titleText.className = "main-title";
+        titleText.textContent = r.titolo;
+        const subtitle = document.createElement("div");
+
+        if (Array.isArray(r.portate)) {
+          r.portate.forEach((p) => {
+            const span = document.createElement("span");
+            span.className = "badge";
+            span.textContent = getCourseLabel(p);
+            subtitle.appendChild(span);
+          });
+        }
+
+        const ownerSpan = document.createElement("span");
+        ownerSpan.className = "badge";
+        if (r.owner === "me" || !r.owner) {
+          ownerSpan.textContent = t("ownerMeLabel");
+        } else {
+          const friend = state.friends.find((f) => f.id === r.owner);
+          ownerSpan.textContent = friend ? friend.name : t("ownerMeLabel");
+        }
+        subtitle.appendChild(ownerSpan);
+
+        if (r.preferito) {
+          const favBadge = document.createElement("span");
+          favBadge.className = "badge";
+          favBadge.textContent = "★ " + t("favoriteBadge");
+          subtitle.appendChild(favBadge);
+        }
+
+        title.appendChild(titleText);
+        title.appendChild(subtitle);
+
+        const fav = document.createElement("div");
+        fav.innerHTML = r.preferito ? '<span class="favorite">★</span>' : "";
+
+        header.appendChild(title);
+        header.appendChild(fav);
+        card.appendChild(header);
+
+        if (r.fotoDataUrl) {
+          const img = document.createElement("img");
+          img.src = r.fotoDataUrl;
+          img.alt = "Recipe photo";
+          img.className = "small-photo";
+          card.appendChild(img);
+        }
+
+        const ratings = document.createElement("div");
+        ratings.className = "muted";
+        ratings.textContent = t("ratingsLine")
+          .replace("{g}", r.valutazioni?.gusto ?? 0)
+          .replace("{f}", r.valutazioni?.facilita ?? 0)
+          .replace("{p}", r.valutazioni?.prezzo ?? 0);
+        card.appendChild(ratings);
+
+        if (r.ingredienti && r.ingredienti.length) {
+          const chips = document.createElement("div");
+          chips.className = "chips";
+          r.ingredienti.forEach((ing) => {
+            const chip = document.createElement("span");
+            chip.className = "chip";
+            chip.textContent = getIngredientLabel(ing.nome);
+            chip.title = ing.nome;
+            chips.appendChild(chip);
+          });
+          card.appendChild(chips);
+        }
+
+        if (r.varianti && r.varianti.length) {
+          const variants = document.createElement("div");
+          variants.className = "muted";
+          variants.style.marginTop = "0.5rem";
+          variants.textContent = r.varianti.join(" · ");
+          card.appendChild(variants);
+        }
+
+        if (r.passaggi && r.passaggi.length) {
+          const toggle = document.createElement("button");
+          toggle.type = "button";
+          toggle.className = "small-btn";
+          toggle.textContent = "+ " + t("stepsTitle");
+
+          const stepsWrapper = document.createElement("div");
+          stepsWrapper.style.display = "none";
+
+          const ul = document.createElement("ul");
+          ul.className = "steps-list";
+          r.passaggi.forEach((stepText, index) => {
+            const li = document.createElement("li");
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.id = `step-${r.id}-${index}`;
+            const labelEl = document.createElement("label");
+            labelEl.setAttribute("for", cb.id);
+            labelEl.textContent = " " + stepText;
+            li.appendChild(cb);
+            li.appendChild(labelEl);
+            ul.appendChild(li);
+          });
+          stepsWrapper.appendChild(ul);
+
+          toggle.addEventListener("click", () => {
+            const isOpen = stepsWrapper.style.display === "block";
+            stepsWrapper.style.display = isOpen ? "none" : "block";
+            toggle.textContent = (isOpen ? "− " : "+ ") + t("stepsTitle");
+          });
+
+          card.appendChild(toggle);
+          card.appendChild(stepsWrapper);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "actions-row";
+
+        if (r.owner === "me" || !r.owner) {
+          const editBtn = document.createElement("button");
+          editBtn.type = "button";
+          editBtn.className = "small-btn";
+          editBtn.textContent = "Edit";
+          editBtn.addEventListener("click", () => {
+            startEditRecipe(r.id);
+          });
+          actions.appendChild(editBtn);
+        }
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.type = "button";
+        deleteBtn.className = "small-btn danger";
+        deleteBtn.textContent = t("recipeRemoveBtn");
+        deleteBtn.addEventListener("click", () => {
+          if (!confirm(t("recipeRemoveConfirm").replace("{name}", r.titolo || ""))) return;
+          removeRecipe(r.id);
+        });
+        actions.appendChild(deleteBtn);
+
+        card.appendChild(actions);
+        list.appendChild(card);
+      });
+    }
+
+    function removeRecipe(id) {
+      state.recipes = state.recipes.filter((r) => r.id !== id);
+      saveState();
+      rebuildIngredientsSet();
+      if (currentEditingId === id) {
+        resetForm();
+      }
+      renderRecipesList();
+    }
+
+    function setActiveSheet(name) {
+      ["sheetForm", "sheetList", "sheetSettings"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display =
+          (id === "sheetForm" && name === "form") ||
+          (id === "sheetList" && name === "list") ||
+          (id === "sheetSettings" && name === "settings")
+            ? "block"
+            : "none";
+      });
+
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.sheet === name);
+      });
+    }
+
+    function updateFormMode() {
+      const formTitle = document.getElementById("formTitle");
+      const submitBtn = document.getElementById("submitBtn");
+      const cancelEditBtn = document.getElementById("cancelEditBtn");
+      if (currentEditingId) {
+        formTitle.textContent = t("formTitleEdit");
+        submitBtn.textContent = t("btnUpdateRecipe");
+        cancelEditBtn.style.display = "inline-block";
+      } else {
+        formTitle.textContent = t("formTitleNew");
+        submitBtn.textContent = t("btnSaveRecipe");
+        cancelEditBtn.style.display = "none";
+      }
+    }
+
+    function resetForm() {
+      const form = document.getElementById("recipeForm");
+      form.reset();
+      document.getElementById("ingredientsContainer").innerHTML = "";
+      document.getElementById("stepsContainer").innerHTML = "";
+      addIngredientRow();
+      addStepRow();
+      document.querySelectorAll('input[name="portataOption"]').forEach((cb) => {
+        cb.checked = false;
+      });
+      const fotoInput = document.getElementById("foto");
+      const fotoPreview = document.getElementById("fotoPreview");
+      fotoInput.value = "";
+      fotoPreview.src = "";
+      fotoPreview.style.display = "none";
+      currentEditingId = null;
+      updateFormMode();
+    }
+
+    function startEditRecipe(id) {
+      const recipe = state.recipes.find((r) => r.id === id);
+      if (!recipe) return;
+      currentEditingId = id;
+      updateFormMode();
+      setActiveSheet("form");
+
+      document.getElementById("titolo").value = recipe.titolo || "";
+
+      document.querySelectorAll('input[name="portataOption"]').forEach((cb) => {
+        cb.checked = Array.isArray(recipe.portate)
+          ? recipe.portate.includes(cb.value)
+          : false;
+      });
+
+      const ingredientsContainer = document.getElementById("ingredientsContainer");
+      ingredientsContainer.innerHTML = "";
+      (recipe.ingredienti || []).forEach((ing) => {
+        addIngredientRow(ing.nome);
+      });
+      if (!recipe.ingredienti || !recipe.ingredienti.length) {
+        addIngredientRow();
+      }
+
+      const stepsContainer = document.getElementById("stepsContainer");
+      stepsContainer.innerHTML = "";
+      (recipe.passaggi || []).forEach((step) => {
+        addStepRow(step);
+      });
+      if (!recipe.passaggi || !recipe.passaggi.length) {
+        addStepRow();
+      }
+
+      document.getElementById("varianti").value = (recipe.varianti || []).join("\n");
+
+      document.getElementById("gusto").value = recipe.valutazioni?.gusto ?? 5;
+      document.getElementById("facilita").value = recipe.valutazioni?.facilita ?? 3;
+      document.getElementById("prezzo").value = recipe.valutazioni?.prezzo ?? 4;
+
+      document.getElementById("preferito").checked = !!recipe.preferito;
+
+      const fotoPreview = document.getElementById("fotoPreview");
+      const fotoInput = document.getElementById("foto");
+      fotoInput.value = "";
+      if (recipe.fotoDataUrl) {
+        fotoPreview.src = recipe.fotoDataUrl;
+        fotoPreview.style.display = "block";
+      } else {
+        fotoPreview.src = "";
+        fotoPreview.style.display = "none";
+      }
+    }
+
+    function collectBaseRecipeData() {
+      const titolo = document.getElementById("titolo").value.trim();
+      if (!titolo) return null;
+
+      const selectedPortate = [];
+      document.querySelectorAll('input[name="portataOption"]:checked').forEach((cb) => {
+        selectedPortate.push(cb.value);
+      });
+      if (selectedPortate.length === 0) {
+        alert(t("alertNoCourse"));
+        return null;
+      }
+
+      const ingredientInputs = document.querySelectorAll(
+        '#ingredientsContainer input[name="ingredientName"]'
+      );
+      const ingredienti = [];
+      ingredientInputs.forEach((inp) => {
+        const raw = inp.value.trim();
+        if (raw) {
+          const base = canonicalIngredient(raw);
+          ingredienti.push({ nome: base });
+          state.ingredientsSet.add(base);
+          // prova ad arricchire con IA (se necessario)
+          requestAIForIngredientIfNeeded(raw);
+        }
+      });
+
+      const stepInputs = document.querySelectorAll(
+        '#stepsContainer input[name="stepText"]'
+      );
+      const passaggi = [];
+      stepInputs.forEach((inp) => {
+        const txt = inp.value.trim();
+        if (txt) {
+          passaggi.push(txt);
+        }
+      });
+
+      const variantiRaw = document.getElementById("varianti").value;
+      const varianti = variantiRaw
+        .split("\n")
+        .map((v) => v.trim())
+        .filter(Boolean);
+
+      const valutazioni = {
+        gusto: Number(document.getElementById("gusto").value || 0),
+        facilita: Number(document.getElementById("facilita").value || 0),
+        prezzo: Number(document.getElementById("prezzo").value || 0)
+      };
+
+      const preferito = document.getElementById("preferito").checked;
+
+      const id = currentEditingId || Date.now();
+
+      return normalizeRecipe({
+        id,
+        titolo,
+        portate: selectedPortate,
+        ingredienti,
+        varianti,
+        passaggi,
+        valutazioni,
+        preferito,
+        owner: "me"
+      });
+    }
+
+    function saveOrUpdateRecipe(recipe) {
+      const idx = state.recipes.findIndex((r) => r.id === recipe.id);
+      if (idx >= 0) {
+        state.recipes[idx] = recipe;
+      } else {
+        state.recipes.push(recipe);
+      }
+      saveState();
+      rebuildIngredientsSet();
+      resetForm();
+      renderRecipesList();
+      setActiveSheet("list");
+      alert(t("alertRecipeSaved"));
+    }
+
+    function exportAllData() {
+      const data = {
+        version: 1,
+        portate: state.portate,
+        recipes: state.recipes.filter((r) => r.owner === "me" || !r.owner),
+        ingredientDict: state.ingredientDict
+      };
+      if (!data.recipes.length) {
+        alert(t("alertNoRecipesToExport"));
+        return;
+      }
+      const json = JSON.stringify(data, null, 2);
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const date = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = "recipes-" + date + ".json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function mergeIngredientDict(target, src) {
+      if (!src) return;
+      Object.keys(src).forEach((base) => {
+        if (!target[base]) {
+          target[base] = { en: "", it: "", fr: "" };
+        }
+        ["en", "it", "fr"].forEach((lang) => {
+          if (src[base][lang] && !target[base][lang]) {
+            target[base][lang] = src[base][lang];
+          }
+        });
+      });
+    }
+
+    function importFromObject(obj, isFriend = false, friendId = null) {
+      const importedRecipesRaw = Array.isArray(obj.recipes) ? obj.recipes : [];
+      const importedPortate = Array.isArray(obj.portate) ? obj.portate : [];
+      const importedDict = obj.ingredientDict || {};
+      if (!importedRecipesRaw.length) {
+        alert(t("alertImportNoRecipes"));
+        return;
+      }
+
+      if (isFriend) {
+        alert(t("confirmMergeFriendImport"));
+
+        const existingIds = new Set(
+          state.recipes
+            .filter((r) => r.owner === friendId)
+            .map((r) => r.id)
+        );
+
+        importedRecipesRaw.forEach((rRaw) => {
+          const nr = normalizeRecipe(rRaw);
+          nr.owner = friendId;
+          if (!existingIds.has(nr.id)) {
+            state.recipes.push(nr);
+            existingIds.add(nr.id);
+          }
+        });
+
+        importedPortate.forEach((p) => {
+          if (!state.portate.includes(p)) {
+            state.portate.push(p);
+          }
+        });
+        mergeIngredientDict(state.ingredientDict, importedDict);
+      } else {
+        const importedRecipes = importedRecipesRaw.map((r) => {
+          const nr = normalizeRecipe(r);
+          nr.owner = "me";
+          return nr;
+        });
+
+        const merge = confirm(t("confirmMergeImport"));
+
+        if (merge) {
+          const existingIds = new Set(
+            state.recipes.filter((r) => r.owner === "me" || !r.owner).map((r) => r.id)
+          );
+          importedRecipes.forEach((r) => {
+            if (!existingIds.has(r.id)) {
+              state.recipes.push(r);
+            }
+          });
+          importedPortate.forEach((p) => {
+            if (!state.portate.includes(p)) {
+              state.portate.push(p);
+            }
+          });
+          mergeIngredientDict(state.ingredientDict, importedDict);
+        } else {
+          // Replace only "me" recipes, keep friends
+          state.recipes = state.recipes.filter((r) => r.owner !== "me" && r.owner !== undefined);
+          importedRecipes.forEach((r) => state.recipes.push(r));
+          if (importedPortate.length) {
+            state.portate = importedPortate;
+          }
+          state.ingredientDict = importedDict || {};
+        }
+      }
+
+      // Keep emoji defaults
+      EMOJI_INGREDIENTS.forEach((i) => {
+        if (!state.ingredientDict[i.base]) {
+          state.ingredientDict[i.base] = { ...i.labels };
+        }
+      });
+
+      saveState();
+      rebuildIngredientsSet();
+      renderPortataOptions();
+      renderPortataManagement();
+      renderFriends();
+      renderRecipesList();
+      alert(t("alertImportDone"));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      applyDeviceMode();
+      renderPortataOptions();
+      renderPortataManagement();
+      addIngredientRow();
+      addStepRow();
+      renderFriends();
+      renderRecipesList();
+      setActiveSheet("form");
+      updateFormMode();
+      applyLanguageToDOM();
+
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          setActiveSheet(btn.dataset.sheet);
+        });
+      });
+
+      document
+        .getElementById("addIngredientBtn")
+        .addEventListener("click", () => addIngredientRow());
+
+      document
+        .getElementById("addStepBtn")
+        .addEventListener("click", () => addStepRow());
+
+      document.getElementById("addPortataBtn").addEventListener("click", () => {
+        const input = document.getElementById("nuovaPortata");
+        const val = input.value.trim();
+        if (!val) return;
+        if (!state.portate.includes(val)) {
+          state.portate.push(val);
+          saveState();
+          renderPortataOptions();
+          renderPortataManagement();
+          input.value = "";
+        }
+      });
+
+      document
+        .getElementById("applyFiltersBtn")
+        .addEventListener("click", renderRecipesList);
+
+      document.getElementById("clearFiltersBtn").addEventListener("click", () => {
+        document.getElementById("filterPortata").value = "";
+        document.getElementById("filterTitle").value = "";
+        document.getElementById("filterIngredients").value = "";
+        document.getElementById("filterOwner").value = "";
+        document.querySelector('input[name="ingredientMode"][value="and"]').checked = true;
+        document.getElementById("sortBy").value = "titolo";
+        renderRecipesList();
+      });
+
+      document.getElementById("cancelEditBtn").addEventListener("click", () => {
+        resetForm();
+        renderRecipesList();
+      });
+
+      // Device mode
+      document.querySelectorAll('input[name="deviceMode"]').forEach((radio) => {
+        radio.addEventListener("change", (e) => {
+          state.settings.deviceMode = e.target.value === "pc" ? "pc" : "mobile";
+          saveState();
+          applyDeviceMode();
+        });
+      });
+      applyDeviceMode();
+
+      // Language
+      document.getElementById("languageSelect").addEventListener("change", (e) => {
+        setLanguage(e.target.value);
+      });
+
+      // Photo preview
+      document.getElementById("foto").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        const fotoPreview = document.getElementById("fotoPreview");
+        if (!file) {
+          fotoPreview.src = "";
+          fotoPreview.style.display = "none";
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          fotoPreview.src = reader.result;
+          fotoPreview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Form submit
+      document.getElementById("recipeForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const baseData = collectBaseRecipeData();
+        if (!baseData) return;
+
+        const fotoInput = document.getElementById("foto");
+        const file = fotoInput.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            baseData.fotoDataUrl = reader.result;
+            saveOrUpdateRecipe(baseData);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          if (currentEditingId) {
+            const old = state.recipes.find((r) => r.id === currentEditingId);
+            baseData.fotoDataUrl = old ? old.fotoDataUrl : null;
+          } else {
+            baseData.fotoDataUrl = null;
+          }
+          saveOrUpdateRecipe(baseData);
+        }
+      });
+
+      // Add friend
+      document.getElementById("addFriendBtn").addEventListener("click", () => {
+        const input = document.getElementById("newFriendName");
+        const name = input.value.trim();
+        if (!name) {
+          alert(t("alertFriendNameRequired"));
+          return;
+        }
+        const friend = { id: Date.now() + Math.random(), name };
+        state.friends.push(friend);
+        saveState();
+        input.value = "";
+        renderFriends();
+      });
+
+      // Export / import
+      const exportBtn = document.getElementById("exportBtn");
+      const importBtn = document.getElementById("importBtn");
+      const importFileInput = document.getElementById("importFile");
+      const friendImportFileInput = document.getElementById("friendImportFile");
+
+      exportBtn.addEventListener("click", () => {
+        exportAllData();
+      });
+
+      importBtn.addEventListener("click", () => {
+        importFileInput.value = "";
+        importFileInput.click();
+      });
+
+      importFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const obj = JSON.parse(reader.result);
+            importFromObject(obj, false, null);
+          } catch (err) {
+            console.error(err);
+            alert(t("alertInvalidFile"));
+          }
+        };
+        reader.readAsText(file, "utf-8");
+      });
+
+      friendImportFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file || currentFriendImportId == null) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const obj = JSON.parse(reader.result);
+            importFromObject(obj, true, currentFriendImportId);
+          } catch (err) {
+            console.error(err);
+            alert(t("alertInvalidFile"));
+          } finally {
+            currentFriendImportId = null;
+          }
+        };
+        reader.readAsText(file, "utf-8");
+      });
+
+      // Filters collapsible
+      const filtersHeader = document.querySelector(".filters-header");
+      const filtersBody = document.querySelector(".filters-body");
+      const filtersToggleIcon = document.getElementById("filtersToggleIcon");
+      let filtersOpen = true;
+      if (filtersHeader && filtersBody && filtersToggleIcon) {
+        filtersHeader.addEventListener("click", () => {
+          filtersOpen = !filtersOpen;
+          filtersBody.style.display = filtersOpen ? "block" : "none";
+          filtersToggleIcon.textContent = filtersOpen ? "▾" : "▸";
+        });
+      }
+
+      // Quick search / live filters
+      const filterTitleInput = document.getElementById("filterTitle");
+      const filterIngredientsInput = document.getElementById("filterIngredients");
+      const filterPortataSelect = document.getElementById("filterPortata");
+      const filterOwnerSelect = document.getElementById("filterOwner");
+      const sortBySelect = document.getElementById("sortBy");
+      const ingredientModeRadios = document.querySelectorAll('input[name="ingredientMode"]');
+      const ingredientDictSearch = document.getElementById("ingredientDictSearch");
+
+      if (filterTitleInput) {
+        filterTitleInput.addEventListener("input", renderRecipesList);
+      }
+      if (filterIngredientsInput) {
+        filterIngredientsInput.addEventListener("input", renderRecipesList);
+      }
+      if (filterPortataSelect) {
+        filterPortataSelect.addEventListener("change", renderRecipesList);
+      }
+      if (filterOwnerSelect) {
+        filterOwnerSelect.addEventListener("change", renderRecipesList);
+      }
+      if (sortBySelect) {
+        sortBySelect.addEventListener("change", renderRecipesList);
+      }
+      ingredientModeRadios.forEach((radio) => {
+        radio.addEventListener("change", renderRecipesList);
+      });
+      if (ingredientDictSearch) {
+        ingredientDictSearch.addEventListener("input", renderIngredientDict);
+      }
+
+      setLanguage(state.settings.language || "en");
+    });
+  </script>
+</body>
+</html>
